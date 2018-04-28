@@ -1,20 +1,52 @@
 # phpBB 3.2 PhpBB Extension - marttiphpbb All Users Groups Template Variables
 
-This extension adds provides you a Template array with all the groups of the users in the context of the current template.
+This extension adds provides you a with Template variables that you can use to check if the users in the view belong to a certain group. 
+
+(See also my extension [Group Template Variables](https://github.com/marttiphpbb/phpbb-ext-grouptempvars) which is for the current user only).
 
 ## Examples
 
-Check if the user is in a certain group (in viewtopic):
+### Viewtopic
 
-    {%- if marttiphpbb_allusersgroupstempvars[postrow.POSTER_ID][5] -%}
-        This postrow is in group 5
+To check if the poster in a postrow belongs to a group:
+
+    {%- if marttiphpbb_allusersgroupstempvars[postrow.POSTER_ID][GROUP_ID] -%}
+        This content is only visible if the poster belongs to group GROUP_ID (replace GROUP_ID with the group number)
     {%- endif -%}
 
-Sum up all the groups a user is member of (in viewtopic):
+To get all id's of groups a poster belongs to (comma separated list):
 
-    {%- for group_name in marttiphpbb_allusersgroupstempvars[postrow.POSTER_ID] -%}
-        {{- group_name}}
+    {%- for group_id, boolean_true in marttiphpbb_allusersgroupstempvars[postrow.POSTER_ID] -%}
+        {{- group_id -}}{% if not loop.last -%}, {% endif -%}
     {%- endfor -%}
+
+### MCP Topic Review 
+
+Same as Viewtopic. The extension adds postrow.POSTER_ID; it is not available from core.
+
+### Memberlist 
+
+    {%- if marttiphpbb_allusersgroupstempvars[memberrow.USER_ID][GROUP_ID] -%}
+        This content is only visible if the member belongs to group GROUP_ID (replace GROUP_ID with the group number)
+    {%- endif -%}
+
+memberrow.USER_ID is added by the extension; it is not available from core.
+
+### Memberlist Profile
+
+    {%- if marttiphpbb_allusersgroupstempvars[USER_ID][GROUP_ID] -%}
+        This content is only visible if the member belongs to group GROUP_ID (replace GROUP_ID with the group number)
+    {%- endif -%}
+
+USER_ID is added by the extension; it is not available from core.
+
+### Search (Results as Posts)
+
+    {%- if marttiphpbb_allusersgroupstempvars[searchresults.POSTER_ID][GROUP_ID] -%}
+        This content is only visible if the poster belongs to group GROUP_ID (replace GROUP_ID with the group number)
+    {%- endif -%}
+
+searchresults.POSTER_ID is added by the extension; it is not available in core.
 
 ## Quick Install
 
@@ -34,6 +66,6 @@ You can install this on the latest release of phpBB 3.2 by following the steps b
 * Report bugs and other issues to the [Issue Tracker](https://github.com/marttiphpbb/phpbb-ext-allusersgroupstempvars/issues).
 * Support requests should be posted and discussed in the [All Users Groups Template Variables topic at phpBB.com](https://www.phpbb.com/community/viewtopic.php?f=456&t=). (Yet to be created)
 
-#### License
+## License
 
 [GPL-2.0](license.txt)
