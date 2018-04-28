@@ -1,6 +1,6 @@
 # phpBB 3.2 PhpBB Extension - marttiphpbb All Users Groups Template Variables
 
-This extension adds provides you a with Template variables that you can use to check if the users in the view belong to a certain group. 
+This extension provides Template variables that can be used to check if the users in the views belong to certain groups.
 
 (See also my extension [Group Template Variables](https://github.com/marttiphpbb/phpbb-ext-grouptempvars) which is for the current user only).
 
@@ -22,7 +22,7 @@ To get all id's of groups a poster belongs to (comma separated list):
 
 ### MCP Topic Review 
 
-Same as Viewtopic. The extension adds postrow.POSTER_ID; it is not available from core.
+Same as Viewtopic. The extension adds `postrow.POSTER_ID`; it is not available from core.
 
 ### Memberlist 
 
@@ -30,7 +30,7 @@ Same as Viewtopic. The extension adds postrow.POSTER_ID; it is not available fro
         This content is only visible if the member belongs to group GROUP_ID (replace GROUP_ID with the group number)
     {%- endif -%}
 
-memberrow.USER_ID is added by the extension; it is not available from core.
+`memberrow.USER_ID` is added by the extension; it is not available from core.
 
 ### Memberlist Profile
 
@@ -38,7 +38,7 @@ memberrow.USER_ID is added by the extension; it is not available from core.
         This content is only visible if the member belongs to group GROUP_ID (replace GROUP_ID with the group number)
     {%- endif -%}
 
-USER_ID is added by the extension; it is not available from core.
+`USER_ID` is added by the extension; it is not available from core.
 
 ### Search (Results as Posts)
 
@@ -46,7 +46,7 @@ USER_ID is added by the extension; it is not available from core.
         This content is only visible if the poster belongs to group GROUP_ID (replace GROUP_ID with the group number)
     {%- endif -%}
 
-searchresults.POSTER_ID is added by the extension; it is not available in core.
+`searchresults.POSTER_ID` is added by the extension; it is not available in core.
 
 ## Quick Install
 
