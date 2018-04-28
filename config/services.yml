@@ -1,9 +1,8 @@
 services:
-    marttiphpbb.grouptempvars.listener:
-        class: marttiphpbb\grouptempvars\event\listener
+    marttiphpbb.allusersgroupstempvars.listener:
+        class: marttiphpbb\allusersgroupstempvars\event\listener
         arguments:
-            - @dbal.conn
-            - @template
-            - @user
+            - '@dbal.conn'
+            - '%tables.user_group%'
         tags:
             - { name: event.listener }

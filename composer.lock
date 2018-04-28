@@ -152,7 +152,7 @@
                 }
             ],
             "description": "A extension validator for phpBB extensions. Extensions are required to pass the validator when submitted to the extension database.",
-            "time": "2015-06-26 10:43:47"
+            "time": "2018-06-26 10:43:47"
         },
         {
             "name": "sensiolabs/ansi-to-html",
@@ -196,7 +196,7 @@
                 }
             ],
             "description": "A library to convert a text with ANSI codes to HTML",
-            "time": "2015-03-17 06:34:10"
+            "time": "2018-03-17 06:34:10"
         },
         {
             "name": "symfony/console",
@@ -254,7 +254,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-29 14:42:58"
+            "time": "2018-05-29 14:42:58"
         },
         {
             "name": "symfony/finder",
@@ -304,7 +304,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-15 13:32:45"
+            "time": "2018-05-15 13:32:45"
         },
         {
             "name": "symfony/process",
@@ -354,7 +354,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-15 13:32:45"
+            "time": "2018-05-15 13:32:45"
         },
         {
             "name": "symfony/yaml",
@@ -404,7 +404,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-02 15:18:45"
+            "time": "2018-05-02 15:18:45"
         }
     ],
     "aliases": [],

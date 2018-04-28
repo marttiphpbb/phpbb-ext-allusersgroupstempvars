@@ -1,29 +1,38 @@
-### phpBB 3.1 PhpBB Extension - marttiphpbb Group Template Variables
+# phpBB 3.2 PhpBB Extension - marttiphpbb All Users Groups Template Variables
 
-This simple extension adds a Template variable for each group the user is in. So you can do conditional checks like this:
+This extension adds provides you a Template array with all the groups of the users in the context of the current template.
 
-    <!-- IF S_GROUP_8 --> Content only visible if your in group with id 8 <!-- ENDIF -->
+## Examples
 
-This extension might be useful together with the [Custom Code](https://github.com/marttiphpbb/phpbb-ext-customcode) extension.
+Check if the user is in a certain group (in viewtopic):
 
-#### Quick Install
+    {%- if marttiphpbb_allusersgroupstempvars[postrow.POSTER_ID][5] -%}
+        This postrow is in group 5
+    {%- endif -%}
 
-You can install this on the latest release of phpBB 3.1 by following the steps below:
+Sum up all the groups a user is member of (in viewtopic):
 
-* Create `marttiphpbb/grouptempvars` in the `ext` directory.
-* Download and unpack the repository into `ext/marttiphpbb/grouptempvars`
-* Enable `Group Template Variables` in the ACP at `Customise -> Manage extensions`.
+    {%- for group_name in marttiphpbb_allusersgroupstempvars[postrow.POSTER_ID] -%}
+        {{- group_name}}
+    {%- endfor -%}
 
-#### Uninstall
+## Quick Install
 
-* Disable `Group Template Variables` in the ACP at `Customise -> Extension Management -> Extensions`.
-* To permanently uninstall, click `Delete Data`.  Optionally delete the `/ext/marttiphpbb/grouptempvars` directory.
+You can install this on the latest release of phpBB 3.2 by following the steps below:
 
-#### Support
+* Create `marttiphpbb/allusersgroupstempvars` in the `ext` directory.
+* Download and unpack the repository into `ext/marttiphpbb/allusersgroupstempvars`
+* Enable `All Users Groups Template Variables` in the ACP at `Customise -> Manage extensions`.
 
-* **Important: Only official release versions validated by the phpBB Extensions Team should be installed on a live forum. Pre-release (beta, RC) versions downloaded from this repository are only to be used for testing on offline/development forums and are not officially supported.**
-* Report bugs and other issues to the [Issue Tracker](https://github.com/marttiphpbb/phpbb-ext-grouptempvars/issues).
-* Support requests should be posted and discussed in the [Group Template Variables topic at phpBB.com](https://www.phpbb.com/community/viewtopic.php?f=456&t=2325391).
+## Uninstall
+
+* Disable `All Users Groups Template Variables` in the ACP at `Customise -> Extension Management -> Extensions`.
+* To permanently uninstall, click `Delete Data`.  Optionally delete the `/ext/marttiphpbb/allusersgroupstempvars` directory.
+
+## Support
+
+* Report bugs and other issues to the [Issue Tracker](https://github.com/marttiphpbb/phpbb-ext-allusersgroupstempvars/issues).
+* Support requests should be posted and discussed in the [All Users Groups Template Variables topic at phpBB.com](https://www.phpbb.com/community/viewtopic.php?f=456&t=). (Yet to be created)
 
 #### License
 

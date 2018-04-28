@@ -1,11 +1,11 @@
 {
-	"name": "marttiphpbb/grouptempvars",
+	"name": "marttiphpbb/allusersgroupstempvars",
 	"type": "phpbb-extension",
-	"description": "Group Template Variables Extension for phpBB 3.1",
-	"homepage": "https://github.com/marttiphpbb/phpbb-ext-grouptempvars",
+	"description": "All Users Group Template Variables Extension for phpBB 3.2",
+	"homepage": "https://github.com/marttiphpbb/phpbb-ext-allusersgroupstempvars",
 	"version": "0.1.0",
-	"time": "2015-06-08",
-	"keywords": ["phpbb", "extension", "template", "groups"],
+	"time": "2018-04-28",
+	"keywords": ["phpbb", "extension", "template", "groups", "users"],
 	"license": "GPL-2.0",
 	"authors": [{
 			"name": "martti",
@@ -14,20 +14,20 @@
 			"role": "Developer"
 		}],
 	"require": {
-		"php": ">=5.3.3"
+		"php": "~7"
 	},
 	"require-dev": {
 		"phpbb/epv": "dev-master"
 	},
 	"extra": {
-		"display-name": "Group Template Variables",
+		"display-name": "All Users Groups Template Variables",
 		"soft-require": {
-			"phpbb/phpbb": ">=3.1.0,<3.2.*@dev"
+			"phpbb/phpbb": ">=3.2.0,<3.3.*@dev"
 		},
 		"version-check": {
 			"host": "marttiphpbb.github.io",
 			"directory": "/version",
-			"filename": "grouptempvars.json"
+			"filename": "allusersgroupstempvars.json"
 		}
 	}
 }

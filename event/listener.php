@@ -1,14 +1,14 @@
 <?php
 /**
-* phpBB Extension - marttiphpbb grouptempvars
-* @copyright (c) 2015 marttiphpbb <info@martti.be>
+* phpBB Extension - marttiphpbb allusersgroupstempvars
+* @copyright (c) 2018 marttiphpbb <info@martti.be>
 * @license GNU General Public License, version 2 (GPL-2.0)
 */
 
-namespace marttiphpbb\grouptempvars\event;
+namespace marttiphpbb\allusersgroupstempvars\event;
 
+use phpbb\event\data as event;
 use phpbb\db\driver\factory as db;
-use phpbb\template\twig\twig as template;
 use phpbb\user;
 
 /**
@@ -24,74 +24,116 @@ class listener implements EventSubscriberInterface
 	/* @var db */
 	protected $db;
 
-	/* @var template */
-	protected $template;
-
 	/* @var user */
 	protected $user;
 
 	/* @var array */
-	private $group_temp_vars;
+	private $user_ids = [];
 
 	/**
 	 * @param db $db
-	 * @param template $template
 	 * @param user $user
 	*/
 	public function __construct(
 		db $db,
-		template $template,
-		user $user
+		string $user_group_table
 	)
 	{
 		$this->db = $db;
-		$this->template = $template;
-		$this->user = $user;
+		$this->user_group_table = $user_group_table;
 	}
 
 	static public function getSubscribedEvents()
 	{
-		return array(
-			'core.page_footer'								=> 'page_footer',
-			'core.parse_attachments_modify_template_data' 	=> 'parse_attachments_modify_template_data',
-		);
+		return [
+			'core.viewtopic_cache_user_data'
+				=> 'core_viewtopic_cache_user_data',
+			'core.mcp_topic_review_modify_row'
+				=> 'core_mcp_topic_review_modify_row',
+			'core.memberlist_prepare_profile_data'
+				=> 'core_memberlist_prepare_profile_data',
+			'core.search_modify_tpl_ary'
+				=> 'core_search_modify_tpl_ary',
+			'core.twig_environment_render_template_before'
+				=> 'core_twig_environment_render_template_before',
+		];
 	}
 
-	public function page_footer($event)
+	public function core_search_modify_tpl_ary(event $event)
 	{
-		$this->set_group_temp_vars();
-	}
+		$show_results = $event['show_results'];
 
-	public function parse_attachments_modify_template_data($event)
-	{
-		$this->set_group_temp_vars();
-	}
-
-	private function set_group_temp_vars()
-	{
-		if (is_array($this->group_temp_vars))
+		if ($show_results === 'topics')
 		{
 			return;
 		}
 
-		$this->group_temp_vars = array();
+		$row = $event['row'];
+		$tpl_ary = $event['tpl_ary'];
 
-		$user_id = $this->user->data['user_id'];
+		$poster_id = $row['poster_id'];
+		$this->user_ids[$poster_id] = true;	
+		$tpl_ary['POSTER_ID'] = $poster_id;
 
-		$sql = 'SELECT group_id 
-			FROM ' . USER_GROUP_TABLE . '
-			WHERE user_id = ' . $user_id . '
-				AND user_pending = 0';
+		$event['tpl_ary'] = $tpl_ary;
+	}
 
-		$result = $this->db->sql_query($sql);
+	public function core_memberlist_prepare_profile_data(event $event)
+	{
+		$data = $event['data'];
+		$template_data = $event['template_data'];
 
-		while ($group_id = $this->db->sql_fetchfield('group_id'))
+		$user_id = $data['user_id'];
+		$this->user_ids[$user_id] = true;
+		$template_data['USER_ID'] = $user_id;
+
+		$event['template_data'] = $template_data;
+	}
+
+	public function core_mcp_topic_review_modify_row(event $event)
+	{
+		$row = $event['row'];
+		$post_row = $event['post_row'];
+		$poster_id = $row['poster_id'];
+
+		$this->user_ids[$poster_id] = true;
+
+		$post_row['POSTER_ID'] = $poster_id;
+		$event['post_row'] = $post_row;
+	}
+
+	public function core_viewtopic_cache_user_data(event $event)
+	{
+		$poster_id = $event['poster_id'];
+		$this->user_ids[$poster_id] = true;
+	}
+
+	public function core_twig_environment_render_template_before(event $event)
+	{
+		if (!count($this->user_ids))
 		{
-			$this->group_temp_vars['S_GROUP_' . $group_id] = true;
+			return;
 		}
+	
+		$context = $event['context'];
+		$tpl_vars = [];
+		$user_ids = array_keys($this->user_ids);
 
+		$sql = 'select user_id, group_id
+			from ' . $this->user_group_table . '
+			where ' . $this->db->sql_in_set('user_id', $user_ids) . '
+				and user_pending = 0';
+	
+		$result = $this->db->sql_query($sql);
+	
+		while ($row = $this->db->sql_fetchrow($result))
+		{
+			$tpl_vars[$row['user_id']][$row['group_id']] = true;
+		}
+	
 		$this->db->sql_freeresult($result);
 
-		$this->template->assign_vars($this->group_temp_vars);
+		$context['marttiphpbb_allusersgroupstempvars'] = $tpl_vars;
+		$event['context'] = $context;
 	}
 }
