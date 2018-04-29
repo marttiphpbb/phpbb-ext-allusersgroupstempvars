@@ -51,7 +51,7 @@ Same as Viewtopic. The extension adds `postrow.POSTER_ID`; it is not available f
 ### UCP PM Viewmessage
 
     {%- if marttiphpbb_allusersgroupstempvars[AUTHOR_ID][GROUP_ID] -%}
-        This content is only visible if the poster belongs to group GROUP_ID (replace GROUP_ID with the group number)
+        This content is only visible if the author belongs to group GROUP_ID (replace GROUP_ID with the group number)
     {%- endif -%}
 
 `AUTHOR_ID` is added by the extension; it is not available in core.
