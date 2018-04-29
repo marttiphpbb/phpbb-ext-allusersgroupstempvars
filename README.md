@@ -20,11 +20,11 @@ To get all id's of groups a poster belongs to (comma separated list):
         {{- group_id -}}{% if not loop.last -%}, {% endif -%}
     {%- endfor -%}
 
-### MCP Topic Review 
+### MCP Topic Review
 
 Same as Viewtopic. The extension adds `postrow.POSTER_ID`; it is not available from core.
 
-### Memberlist 
+### Memberlist
 
     {%- if marttiphpbb_allusersgroupstempvars[memberrow.USER_ID][GROUP_ID] -%}
         This content is only visible if the member belongs to group GROUP_ID (replace GROUP_ID with the group number)
@@ -47,6 +47,14 @@ Same as Viewtopic. The extension adds `postrow.POSTER_ID`; it is not available f
     {%- endif -%}
 
 `searchresults.POSTER_ID` is added by the extension; it is not available in core.
+
+### UCP PM Viewmessage
+
+    {%- if marttiphpbb_allusersgroupstempvars[AUTHOR_ID][GROUP_ID] -%}
+        This content is only visible if the poster belongs to group GROUP_ID (replace GROUP_ID with the group number)
+    {%- endif -%}
+
+`AUTHOR_ID` is added by the extension; it is not available in core.
 
 ## Quick Install
 

@@ -46,6 +46,8 @@ class listener implements EventSubscriberInterface
 	static public function getSubscribedEvents()
 	{
 		return [
+			'core.ucp_pm_view_message'
+				=> 'core_ucp_pm_view_message',
 			'core.viewtopic_cache_user_data'
 				=> 'core_viewtopic_cache_user_data',
 			'core.mcp_topic_review_modify_row'
@@ -57,6 +59,18 @@ class listener implements EventSubscriberInterface
 			'core.twig_environment_render_template_before'
 				=> 'core_twig_environment_render_template_before',
 		];
+	}
+
+	public function core_ucp_pm_view_message(event $event)
+	{
+		$message_row = $event['message_row'];
+		$msg_data = $event['msg_data'];
+	
+		$author_id = $message_row['author_id']; 
+		$this->user_ids[$author_id] = true;
+		$msg_data['AUTHOR_ID'] = $author_id;
+
+		$event['msg_data'] = $msg_data;
 	}
 
 	public function core_search_modify_tpl_ary(event $event)
