@@ -4,6 +4,11 @@ This extension provides Template variables that can be used to check if the user
 
 (See also my extension [Group Template Variables](https://github.com/marttiphpbb/phpbb-ext-grouptempvars) which is for the current user only).
 
+## Requirements
+
+* phpBB 3.2.1+
+* PHP 7+
+
 ## Examples
 
 ### Viewtopic
