@@ -10,30 +10,14 @@ namespace marttiphpbb\allusersgroupstempvars\event;
 use phpbb\event\data as event;
 use phpbb\db\driver\factory as db;
 use phpbb\user;
-
-/**
-* @ignore
-*/
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
-* Event listener
-*/
 class listener implements EventSubscriberInterface
 {
-	/* @var db */
 	protected $db;
-
-	/* @var user */
 	protected $user;
+	protected $user_ids = [];
 
-	/* @var array */
-	private $user_ids = [];
-
-	/**
-	 * @param db $db
-	 * @param user $user
-	*/
 	public function __construct(
 		db $db,
 		string $user_group_table
@@ -65,8 +49,8 @@ class listener implements EventSubscriberInterface
 	{
 		$message_row = $event['message_row'];
 		$msg_data = $event['msg_data'];
-	
-		$author_id = $message_row['author_id']; 
+
+		$author_id = $message_row['author_id'];
 		$this->user_ids[$author_id] = true;
 		$msg_data['AUTHOR_ID'] = $author_id;
 
@@ -86,7 +70,7 @@ class listener implements EventSubscriberInterface
 		$tpl_ary = $event['tpl_ary'];
 
 		$poster_id = $row['poster_id'];
-		$this->user_ids[$poster_id] = true;	
+		$this->user_ids[$poster_id] = true;
 		$tpl_ary['POSTER_ID'] = $poster_id;
 
 		$event['tpl_ary'] = $tpl_ary;
@@ -128,7 +112,7 @@ class listener implements EventSubscriberInterface
 		{
 			return;
 		}
-	
+
 		$context = $event['context'];
 		$tpl_vars = [];
 		$user_ids = array_keys($this->user_ids);
@@ -137,14 +121,14 @@ class listener implements EventSubscriberInterface
 			from ' . $this->user_group_table . '
 			where ' . $this->db->sql_in_set('user_id', $user_ids) . '
 				and user_pending = 0';
-	
+
 		$result = $this->db->sql_query($sql);
-	
+
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			$tpl_vars[$row['user_id']][$row['group_id']] = true;
 		}
-	
+
 		$this->db->sql_freeresult($result);
 
 		$context['marttiphpbb_allusersgroupstempvars'] = $tpl_vars;
